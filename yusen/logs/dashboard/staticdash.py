@@ -106,9 +106,9 @@ for robot, items in robot_destro_data.items():
         })
 
 df = pd.DataFrame(rows)
-robot_cases_df = (
-    df.groupby("Robot")["Case Num"].max().reset_index().sort_values(by="Robot")
-)
+# robot_cases_df = (
+#     df.groupby("Robot")["Case Num"].max().reset_index().sort_values(by="Robot")
+# )
 cases_ph_df = pd.DataFrame(cases_per_hour).T.fillna(0).astype(int)
 
 cases_ph_df= cases_ph_df.reindex(sorted(cases_ph_df.columns), axis=1)
@@ -118,13 +118,13 @@ robot_dist_df = pd.DataFrame(list(robot_fms_data.items()), columns=["Robot", "Di
 progress_df=pd.DataFrame(list(progress.items()), columns=["Hour", "Cases"])
 robot_uph_df=pd.DataFrame(list(robot_total_cases.items()), columns=["Robot", "Total Cases"])
 # ---------------- Display Dashboard ----------------
-st.image("destro_logo.png", width=400)
+st.image("/home/soorya/destro_dashboard/destro_dashboard/yusen/logs/destro_logo.png", width=400)
 st.metric(label="Total Cases Picked", value=log_data['total_cases'])
 
-chart_cases = alt.Chart(robot_cases_df).mark_bar().encode(
-    x=alt.X('Robot:N', sort='ascending'),
-    y='Case Num:Q'
-).properties(width=2000, height=400, title="Robot vs Cases Unloaded in this Trip")
+# chart_cases = alt.Chart(robot_cases_df).mark_bar().encode(
+#     x=alt.X('Robot:N', sort='ascending'),
+#     y='Case Num:Q'
+# ).properties(width=2000, height=400, title="Robot vs Cases Unloaded in this Trip")
 
 chart_dist = alt.Chart(robot_dist_df).mark_bar().encode(
     x=alt.X('Robot:N', sort='ascending'),
@@ -136,7 +136,7 @@ chart_botuph = alt.Chart(robot_uph_df).mark_bar().encode(
 ).properties(width=2000, height=400, title="Robot vs Total Cases")
 
 
-st.altair_chart(chart_cases, use_container_width=False)
+# st.altair_chart(chart_cases, use_container_width=False)
 st.altair_chart(chart_dist, use_container_width=False)
 st.title("Robot Unloading Cases per Hour")
 st.dataframe(cases_ph_df , use_container_width=True)
