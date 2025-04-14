@@ -122,7 +122,7 @@ robot_dist_df = pd.DataFrame(list(robot_fms_data.items()), columns=["Robot", "Di
 progress_df=pd.DataFrame(list(progress.items()), columns=["Hour", "Cases"])
 robot_uph_df=pd.DataFrame(list(robot_total_cases.items()), columns=["Robot", "Total Cases"])
 # ---------------- Display Dashboard ----------------
-st.image("dashboard_assets/destro_logo.jpg", width=400)
+st.image("destro_logo.jpg", width=400)
 st.metric(label="Total Cases Picked", value=log_data['total_cases'])
 
 # chart_cases = alt.Chart(robot_cases_df).mark_bar().encode(
