@@ -5,9 +5,10 @@ import re
 import os
 from collections import defaultdict
 from datetime import datetime
-DESTRO_PATH = "yusen/logs/inputlog/yusen_2025-04-10.log"
-FMS_PATH = "yusen/logs/inputlog/FMS_2025-04-10.log"
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DESTRO_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "yusen_2025-04-10.log")
+FMS_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "FMS_2025-04-10.log")
 st.set_page_config(page_title="destro", layout="wide")
 
 # ---------------- Data Structures ----------------
@@ -118,7 +119,7 @@ robot_dist_df = pd.DataFrame(list(robot_fms_data.items()), columns=["Robot", "Di
 progress_df=pd.DataFrame(list(progress.items()), columns=["Hour", "Cases"])
 robot_uph_df=pd.DataFrame(list(robot_total_cases.items()), columns=["Robot", "Total Cases"])
 # ---------------- Display Dashboard ----------------
-st.image("yusen/logs/destro_logo.png", width=400)
+st.image("/home/soorya/destro_dashboard/destro_dashboard/yusen/logs/destro_logo.png", width=400)
 st.metric(label="Total Cases Picked", value=log_data['total_cases'])
 
 # chart_cases = alt.Chart(robot_cases_df).mark_bar().encode(
