@@ -9,18 +9,19 @@ from datetime import datetime
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # DESTRO_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "yusen_2025-04-10.log")
 # FMS_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "FMS_2025-04-10.log")
-DESTRO_PATH = "inputlog/yusen_2025-04-10.log"
-FMS_PATH = "inputlog/FMS_2025-04-10.log"
+DESTRO_PATH = "inputlog/yusen_2025-04-16.log"
+FMS_PATH = "inputlog/FMS_2025-04-16.log"
 st.set_page_config(page_title="destro", layout="wide")
 
 
 # ---------------- Data Structures ----------------
 robot_destro_data = defaultdict(lambda: defaultdict(dict))
-progress = defaultdict(int)
+progress_track={"0.0":0}
+progress=defaultdict(int)
 task_id_tracker=[]
 log_data = {"total_cases": 0}
-robot_fms_data = {f"Robot {i}": 0 for i in range(17)}
-robot_total_cases={f"Robot {i}" : 0 for i in range(17)}
+robot_fms_data = {f"Robot {i}": 0 for i in range(40)}
+robot_total_cases={f"Robot {i}" : 0 for i in range(40)}
 cases_per_hour = defaultdict(lambda: defaultdict(int))
 log_time_format = "%Y-%m-%d %H:%M:%S,%f"
 # ---------------- DESTRO Log Parser ----------------
@@ -81,14 +82,18 @@ def parse_fms_log(path):
                 match = pattern.search(line)
                 if match:
                     hour, cases = match.groups()
-                    progress[hour] = int(cases)
+                    cases_until_now= sum(progress_track.values())
+                    progress_track[hour]=int(cases)   
+                    
+                    progress_track[hour]=progress_track[hour]-cases_until_now
+                    progress[hour]=progress_track[hour]
 
             else:
                 pattern = re.compile(r"Robot robot_(\d+)\s+has travelled\s+([\d\.]+)\s+m")
                 match = pattern.search(line)
                 if match:
                     robot_id, dist = match.groups()
-                    if int(robot_id)<17:
+                    if int(robot_id)<40:
 
                         robot_key = f"Robot {robot_id}"
                         robot_fms_data[robot_key] = float(dist)
