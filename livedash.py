@@ -5,10 +5,10 @@ import natsort
 import altair as alt 
 from collections import defaultdict
 from logreader import log_data, robot_destro_data,lock, start_destro_thread,start_fms_thread,robot_fms_data,progress,log_data,cases_per_hour,robot_total_cases
-from logreader import flag_event 
+from logreader import flag_event
 from datetime import datetime
-DESTRO_PATH = "/home/soorya/destro_yusen/cross-docking/logs/yusen_2025-04-16.log"
-FMS_PATH="/home/soorya/destro_python/yunsen/logs/FMS_2025-04-16.log"
+DESTRO_PATH = "/home/soorya/destro_yusen/cross-docking/logs/yusen_2025-04-18.log"
+FMS_PATH="/home/soorya/destro_python/yunsen/logs/FMS_2025-04-18.log"
 st.set_page_config(page_title="destro", layout="wide")
 
 start_destro_thread(DESTRO_PATH)
@@ -111,7 +111,7 @@ while True:
 
         # df=pd.DataFrame(rows)
     with placeholder.container():
-       
+        # print(progress)
        
         st.image("/home/soorya/destro_dashboard/destro_dashboard/destro_logo.jpg", width=400)
         st.metric(label="Time", value=ctime)
@@ -146,4 +146,6 @@ while True:
         st.dataframe(df, use_container_width=True)
         st.write("### Progress per hour")
         st.dataframe(progress_df, use_container_width=True)
+        st.write("Progress DataFrame Raw:", progress_df)
+
     time.sleep(0.1)

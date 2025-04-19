@@ -7,7 +7,7 @@ import re
 from collections import defaultdict
 from datetime import datetime
 robot_destro_data = defaultdict(lambda: defaultdict(list))
-progress= defaultdict(int)
+progress= {}
 progress_track={"0.0":0}
 
 log_data={}
@@ -42,6 +42,7 @@ def read_fms_log(fms_log):
             line = re.sub(r'\x1b\[[0-9;]*m', '', line)  # Remove ANSI
 
             with lock:
+                # print(f"FROM LOG READER{progress}")
                 if "CODE 301" in line :
                     pattern = re.compile(
                             r"CODE F01 at (\d+\.\d+) number of cases finished is (\d+)"
@@ -120,7 +121,7 @@ def read_destro_log(destro_log):
                 elif "CODE 101" in line:
                     pattern =re.compile(r"CODE 101 --------------- (\d+)")
                     match =pattern.search(line)
-                    print(match)
+                    # print(match)
                     if match :
                         cases=match.groups()
                         print(f"cases ----{cases}")

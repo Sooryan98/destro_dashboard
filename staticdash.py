@@ -9,8 +9,8 @@ from datetime import datetime
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # DESTRO_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "yusen_2025-04-10.log")
 # FMS_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "FMS_2025-04-10.log")
-DESTRO_PATH = "inputlog/yusen_2025-04-16.log"
-FMS_PATH = "inputlog/FMS_2025-04-16.log"
+DESTRO_PATH = "inputlog/yusen_2025-04-18.log"
+FMS_PATH = "inputlog/FMS_2025-04-18.log"
 st.set_page_config(page_title="destro", layout="wide")
 
 
