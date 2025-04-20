@@ -163,7 +163,7 @@ robot_uph_df=pd.DataFrame(list(robot_total_cases.items()), columns=["Robot", "To
 robot_uph_df["Robot_Num"] = robot_uph_df["Robot"].str.extract(r'(\d+)').astype(int)
 robot_uph_df = robot_uph_df.sort_values(by="Robot_Num")
 # ---------------- Display Dashboard ----------------
-st.image("/home/soorya/destro_dashboard/destro_dashboard/destro_logo.jpg", width=400)
+st.image("destro_logo.jpg", width=400)
 st.metric(label="Time", value=f"4:50:32")
 
 st.metric(label="Total Cases Picked", value=log_data['total_cases'])
