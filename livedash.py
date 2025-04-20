@@ -4,11 +4,11 @@ import pandas as pd
 import natsort
 import altair as alt 
 from collections import defaultdict
-from logreader import log_data, robot_destro_data,lock, start_destro_thread,start_fms_thread,robot_fms_data,progress,log_data,cases_per_hour,robot_total_cases
+from logreader import log_data, robot_destro_data,lock, start_destro_thread,start_fms_thread,robot_fms_data,progress,log_data,cases_per_hour,robot_total_cases, progress_track,uph_tracker
 from logreader import flag_event
 from datetime import datetime
-DESTRO_PATH = "/home/soorya/destro_yusen/cross-docking/logs/yusen_2025-04-18.log"
-FMS_PATH="/home/soorya/destro_python/yunsen/logs/FMS_2025-04-18.log"
+DESTRO_PATH = "/home/soorya/destro_yusen/cross-docking/logs/yusen_2025-04-20.log"
+FMS_PATH="/home/soorya/destro_python/yunsen/logs/FMS_2025-04-20.log"
 st.set_page_config(page_title="destro", layout="wide")
 
 start_destro_thread(DESTRO_PATH)
@@ -105,6 +105,7 @@ while True:
 
         cases_ph_df["Total cases overall"] = cases_ph_df.sum(axis=1)
         progress_df=pd.DataFrame(list(progress.items()), columns=["Hour", "Cases"])
+        uph_tracker_df=pd.DataFrame(list(uph_tracker.items()), columns=["Hour", "UPH"])
         robot_uph_df=pd.DataFrame(list(robot_total_cases.items()), columns=["Robot", "Total Cases"])
         robot_uph_df["Robot_Num"] = robot_uph_df["Robot"].str.extract(r'(\d+)').astype(int)
         robot_uph_df = robot_uph_df.sort_values(by="Robot_Num")
@@ -146,6 +147,9 @@ while True:
         st.dataframe(df, use_container_width=True)
         st.write("### Progress per hour")
         st.dataframe(progress_df, use_container_width=True)
-        st.write("Progress DataFrame Raw:", progress_df)
+
+        st.write("### UPH breakdown")
+        st.dataframe(uph_tracker_df, use_container_width=True)
+
 
     time.sleep(0.1)

@@ -13,15 +13,15 @@ progress_track={"0.0":0}
 log_data={}
 log_data['total_cases']=0
 robot_fms_data={}
-for i in range (0,40):
+for i in range (0,25):
     robot_fms_data[f"Robot{i+1}"]=0
 start_clock=0
-
+uph_tracker={}
 flag=False
 lock = threading.Lock()
 flag_event= Event()
-robot_fms_data = {f"Robot{i+1}": 0 for i in range(40)}
-robot_total_cases={f"Robot{i+1}" : 0 for i in range(40)}
+robot_fms_data = {f"Robot{i+1}": 0 for i in range(25)}
+robot_total_cases={f"Robot{i+1}" : 0 for i in range(25)}
 cases_per_hour = defaultdict(lambda: defaultdict(int))
 log_time_format = "%Y-%m-%d %H:%M:%S,%f"
 def read_fms_log(fms_log):
@@ -43,24 +43,34 @@ def read_fms_log(fms_log):
 
             with lock:
                 # print(f"FROM LOG READER{progress}")
-                if "CODE 301" in line :
-                    pattern = re.compile(
-                            r"CODE F01 at (\d+\.\d+) number of cases finished is (\d+)"
-)
+                if "CODE F01" in line :
+                    pattern = re.compile(r"CODE F01 at (\d+\.\d+) number of cases finished is (\d+)")
                     match = pattern.search(line)
+                    # print(match)
                     if match:
                         hour, cases = match.groups()
+                        print(f"L1{cases} --- type is {type(cases)}")
                         cases_until_now= sum(progress_track.values())
                         progress_track[hour]=int(cases)   
-                        
+                        print(f"L2{progress_track}")
                         progress_track[hour]=progress_track[hour]-cases_until_now
+                        print(f"L3--{progress_track}")
                         progress[hour]=progress_track[hour]
+                        print(f"L4{progress}")
                         
-                        
-                    
+                elif "CODE F02" in line:
+                    pattern =re.compile(
+                            r"CODE F02 at (\d+\.\d+) UPH is (\d+)"
+
+)
+                    match=pattern.search(line)
+                    if match:
+                        hour,uph=match.groups()
+                        uph_tracker[hour]=uph
+
 
                 elif "CODE 000" in line :
-                    print("FMS CAN START NOW")
+                    # print("FMS CAN START NOW")
                     flag_event.set()
 
                 else:
@@ -124,7 +134,7 @@ def read_destro_log(destro_log):
                     # print(match)
                     if match :
                         cases=match.groups()
-                        print(f"cases ----{cases}")
+                        # print(f"cases ----{cases}")
                       
 
                         log_data['total_cases']=int(cases[0])
