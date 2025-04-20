@@ -5,14 +5,13 @@ import re
 import os
 from collections import defaultdict
 from datetime import datetime
-import requests
+
 
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # DESTRO_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "yusen_2025-04-10.log")
 # FMS_PATH = os.path.join(BASE_DIR, "yusen", "logs", "inputlog", "FMS_2025-04-10.log")
-DESTRO_PATH = "inputlog/yusen_2025-04-20.log"
-# FMS_URL="https://destroai-my.sharepoint.com/:u:/p/soorya/EUBp-fm1bTFAkYsTZ2rucQcBXe5TdyaxSwFTfNNrr9JR8w?e=2OmjNF"
-FMS_PATH = "inputlog/FMS_2025-04-20.log"
+DESTRO_PATH = "log_bank/yusen_2025-04-20.log"
+FMS_PATH = "log_bank/FMS_2025-04-20.log"
 st.set_page_config(page_title="destro", layout="wide")
 
 
